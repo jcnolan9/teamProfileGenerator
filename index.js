@@ -3,7 +3,13 @@ const fs = require('fs')
 const Manager = require('./lib/Manager')
 const Engineer = require('./lib/Engineer')
 const Intern = require('./lib/Intern')
+const html = require('./src/script')
 
+let team = {
+    manager: [],
+    engineers: [],
+    interns: []
+}
 
 
 function init() {
@@ -29,7 +35,10 @@ function init() {
             name: "managerOffice"
         }
     ])
-    .then((answers) => {
+    .then((response) => {
+        console.log("manager name", response.managerName)
+        let manager = new Manager(response.managerName, response.managerID, response.managerEmail, response.managerOffice)
+        team.manager.push(manager)
         optionMenu()
     })
     .catch((err) => {
@@ -60,6 +69,9 @@ function optionMenu() {
         }
         else{
             console.log("Done")
+            console.log("team", team)
+            html(team)
+
         }
     })   
 }
@@ -86,7 +98,9 @@ function engineerPrompt() {
             message: 'What is the engineer\'s Github username?',
             name: "engineerGithub"
         }
-    ]).then(() => {
+    ]).then((response) => {
+        let eng = new Engineer(response.engineerName, response.engineerID, response.engineerEmail, response.engineerGithub)
+        team.engineers.push(eng)
         optionMenu()
     })
 }
@@ -113,9 +127,17 @@ function internPrompt() {
             message: 'What is the intern\'s school?',
             name: "internSchool"
         }
-    ]).then(() => {
+    ]).then((response) => {
+        let intern = new Intern(response.internName, response.internID, response.internEmail, response.internSchool)
+        team.interns.push(intern)
         optionMenu()
     })
 }
+
+// function writeToFile(filename, data) {
+//     fs.writeFile(filename, html(data), (err) => {
+//         console.log(err)
+//     })
+// }
 
 init()
