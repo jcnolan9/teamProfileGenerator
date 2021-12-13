@@ -3,7 +3,7 @@ const fs = require('fs')
 const Manager = require('./lib/Manager')
 const Engineer = require('./lib/Engineer')
 const Intern = require('./lib/Intern')
-const html = require('./src/script')
+//const html = require('./src/script')
 
 let team = {
     manager: [],
@@ -70,8 +70,11 @@ function optionMenu() {
         else{
             console.log("Done")
             console.log("team", team)
+            //genManager(team)
+            // combineEngineers(team)
+            // combineInterns(team)
             html(team)
-
+            writeToFile("team.html")
         }
     })   
 }
@@ -134,10 +137,87 @@ function internPrompt() {
     })
 }
 
-// function writeToFile(filename, data) {
-//     fs.writeFile(filename, html(data), (err) => {
-//         console.log(err)
-//     })
-// }
+function writeToFile(filename, data) {
+    fs.writeFile(filename, html(data), (err) => {
+        console.log(err)
+    })
+}
+
+function html(myTeam) {
+    return `<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link> rel="stylesheet" href="src/styles.css"
+        <title>My Team</title>
+    </head>
+    <body>
+        <header>
+            <h1>My Team</h1>
+        </header>
+        <section id='manager'>
+            ${genManager(team)}
+        </section>
+        <section id='engineer'>
+            ${combineEngineers(team)}
+        </section>
+        <section id='intern'>
+            ${combineInterns(team)}
+        </section>
+        <script src='script.js'></script>
+    </body>
+    </html>`
+}
+
+function genManager(myTeam) {
+    if(myTeam.manager.length > 0) {
+        return `
+        <h2>${myTeam.manager[0].getName()}</h2>
+        <h3>${myTeam.manager[0].getRole()}</h3>
+        <p>ID: ${myTeam.manager[0].getId()}</p>
+        <p>Email: ${myTeam.manager[0].getEmail()}</p>
+        <p>Office Number: ${myTeam.manager[0].getOffice()}</p>`
+    }
+}
+
+function genEngineer(engineer) {
+    return `
+        <section> 
+            <h2>${engineer.getName()}</h2>
+            <h3>${engineer.getRole()}</h3>
+            <p>ID: ${engineer.getId()}</p>
+            <p>Email: ${engineer.getEmail()}</p>
+            <p>Github: ${engineer.getGithub()}</p>
+        </section>`
+}
+
+function genIntern(intern) {
+    return `
+        <section> 
+            <h2>${intern.getName()}</h2>
+            <h3>${intern.getRole()}</h3>
+            <p>ID: ${intern.getId()}</p>
+            <p>Email: ${intern.getEmail()}</p>
+            <p>School: ${intern.getSchool()}</p>
+        </section>`
+}
+
+function combineEngineers(myTeam) {
+    let engineerString = ``
+    for(let i =0; i < myTeam.engineers.length; i++) {
+        engineerString += genEngineer(myTeam.engineers[i])
+    }
+    return engineerString
+}
+
+function combineInterns(myTeam) {
+    let internString = ``
+    for(let i =0; i < myTeam.interns.length; i++) {
+        internString += genIntern(myTeam.interns[i])
+    }
+    return internString
+}
 
 init()
