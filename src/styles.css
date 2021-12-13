@@ -1,0 +1,21 @@
+.manager{
+    display: block;
+}
+
+.engineers {
+    display: block;
+}
+
+.interns {
+    display: block;
+}
+
+.engineers > section {
+    display: flex;
+    border: 2px solid black;
+}
+
+.interns > section {
+    display: flex;
+    border: 2px solid black;
+}
