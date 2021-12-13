@@ -150,20 +150,20 @@ function html(myTeam) {
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link> rel="stylesheet" href="src/styles.css"
+        <link rel="stylesheet" href="src/styles.css">
         <title>My Team</title>
     </head>
     <body>
         <header>
             <h1>My Team</h1>
         </header>
-        <section id='manager'>
+        <section class='manager'>
             ${genManager(team)}
         </section>
-        <section id='engineer'>
+        <section class='engineers'>
             ${combineEngineers(team)}
         </section>
-        <section id='intern'>
+        <section class='interns'>
             ${combineInterns(team)}
         </section>
         <script src='script.js'></script>
@@ -177,7 +177,7 @@ function genManager(myTeam) {
         <h2>${myTeam.manager[0].getName()}</h2>
         <h3>${myTeam.manager[0].getRole()}</h3>
         <p>ID: ${myTeam.manager[0].getId()}</p>
-        <p>Email: ${myTeam.manager[0].getEmail()}</p>
+        <p>Email: <a href='mailto:${myTeam.manager[0].getEmail()}'> ${myTeam.manager[0].getEmail()} </a></p>
         <p>Office Number: ${myTeam.manager[0].getOffice()}</p>`
     }
 }
@@ -189,7 +189,7 @@ function genEngineer(engineer) {
             <h3>${engineer.getRole()}</h3>
             <p>ID: ${engineer.getId()}</p>
             <p>Email: ${engineer.getEmail()}</p>
-            <p>Github: ${engineer.getGithub()}</p>
+            <p>Github: <a href='https://www.github.com/${engineer.getGithub()}' target='_blank'>${engineer.getGithub()}</a></p>
         </section>`
 }
 
